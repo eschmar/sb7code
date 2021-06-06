@@ -7,3 +7,11 @@ run the examples.
 
 *Note that to run these examples, you need the associated media files which
 are available from http://openglsuperbible.com/files/superbible7-media.zip*.
+
+
+## Ubuntu
+
+```sh
+sudo apt install libglew-dev libglfw3 libglfw3-dev
+
+```
