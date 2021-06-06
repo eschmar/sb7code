@@ -133,6 +133,10 @@ set(EXAMPLES
   wrapmodes
 )
 
+set (EXPERIMENTS
+  first
+)
+
 find_package(OpenMP)
 if (OPENMP_FOUND)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
@@ -147,6 +151,15 @@ foreach(EXAMPLE ${EXAMPLES})
     configure_file(${PROJECT_SOURCE_DIR}/build/templates/vs2013.vcxproj.user.in ${CMAKE_CURRENT_BINARY_DIR}/${EXAMPLE}.vcxproj.user @ONLY)
   endif(MSVC)
 endforeach(EXAMPLE)
+
+foreach(EXPERIMENT ${EXPERIMENTS})
+  add_executable(${EXPERIMENT} WIN32 book/${EXPERIMENT}.cpp)
+  set_property(TARGET ${EXPERIMENT} PROPERTY DEBUG_POSTFIX _d)
+  target_link_libraries(${EXPERIMENT} ${COMMON_LIBS})
+  if(MSVC)
+    configure_file(${PROJECT_SOURCE_DIR}/build/templates/vs2013.vcxproj.user.in ${CMAKE_CURRENT_BINARY_DIR}/${EXPERIMENT}.vcxproj.user @ONLY)
+  endif(MSVC)
+endforeach(EXPERIMENT)
 
 IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_LINUX -std=c++0x")
